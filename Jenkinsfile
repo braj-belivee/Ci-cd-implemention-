@@ -25,7 +25,7 @@ pipeline {
             steps {
                 script{
                     echo "building the image file"
-                    withCredentials([usernamePassword(credentialsId:'docker-hub-repo',passwordVariable:'PASS',userVariable:'USER')])
+                    withCredentials([usernamePassword(credentialsId:'docker-hub-repo',passwordVariable:'PASS',usernameVariable:'USER')])
                     {
                         sh 'docker build -t brajbelivee/practisee:latest .'
                         sh 'echo $PASS| docker login -u $USER --password-stdin'
