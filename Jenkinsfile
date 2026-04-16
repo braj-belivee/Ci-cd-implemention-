@@ -14,21 +14,22 @@ pipeline {
                 sh 'npm install'
             }
         }
+
         stage('Clean Old') {
             steps {
-                sh 'docker compose down || true'
+                sh 'docker-compose down || true'
             }
         }
+
         stage('Debug Files') {
-    steps {
-        sh 'pwd'
-        sh 'ls -l'
-    }
-}
+            steps {
+                sh 'pwd'
+                sh 'ls -l'
+            }
+        }
 
         stage('Deploy') {
             steps {
-                sh 
                 sh 'docker-compose up -d'
             }
         }
@@ -37,6 +38,12 @@ pipeline {
             steps {
                 sh 'sleep 15'
             }
+        }
+    }
+
+    post {
+        always {
+            sh 'docker-compose down || true'
         }
     }
 }
