@@ -43,7 +43,7 @@ pipeline {
 
     post {
         always {
-            sh 'docker-compose down || true'
+            sh 'docker-compose down -f Docker-compose.yaml || true'
         }
     }
 }
