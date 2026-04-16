@@ -17,7 +17,7 @@ pipeline {
 
         stage('Clean Old') {
             steps {
-                sh 'docker-compose down || true'
+                sh 'docker-compose -f Docker-compose.yaml down || true'
             }
         }
 
@@ -30,7 +30,7 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                sh 'docker-compose up -d'
+                sh 'docker-compose -f Docker-compose.yaml up -d'
             }
         }
 
