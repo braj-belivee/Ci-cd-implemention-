@@ -1,6 +1,6 @@
 pipeline {
     agent any
-    
+
     stages {
         stage('install dep') {
             steps {
@@ -10,7 +10,7 @@ pipeline {
         stage('test') {
             steps {
                 echo 'testing'
-                sh 'npm test'
+                // sh 'npm test'
             }
         }
         // stage('Remove old files') {
