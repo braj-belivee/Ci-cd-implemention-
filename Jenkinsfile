@@ -21,10 +21,15 @@ pipeline {
             }
         }
 
-        stage('Debug Files') {
+        stage('build image') {
             steps {
-                sh 'pwd'
-                sh 'ls -l'
+                script{
+                    echo "building the image file"
+                    withCredentials([usernamePassword(credentialsId:'docker-hub-repo',passwordVariable:'PASS',userVariable:'USER')])
+                        sh 'docker build -t brajbelivee/practisee:latest .'
+                        sh 'echo $PASS| docker login -u $USER --password-stdin'
+                        sh 'docker push brajbelivee/practisee:latest'
+                }
             }
         }
 
