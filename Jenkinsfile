@@ -1,28 +1,41 @@
 pipeline {
     agent any
 
+    tools {
+        nodejs 'node-18'
+    }
+
     stages {
-        stage('install dep') {
+
+        stage('Install Dependencies') {
             steps {
-                echo 'install' 
+                sh 'node -v'
+                sh 'npm -v'
+                sh 'npm install'
             }
         }
-        stage('test') {
+        stage('Clean Old') {
             steps {
-                echo 'testing'
-                // sh 'npm test'
+                sh 'docker compose down || true'
             }
         }
-        // stage('Remove old files') {
-        //     steps {
-        //         sh 'docker-compose down || true'
-        //     }
-        // }
-        stage('deploy') {
+
+        stage('Deploy') {
             steps {
-                echo "deploying the application"
-                // sh 'docker-compose up -d'
+                sh 'docker compose up -d'
             }
+        }
+
+        stage('Wait') {
+            steps {
+                sh 'sleep 15'
+            }
+        }
+    }
+
+    post {
+        always {
+            sh 'docker compose down'
         }
     }
 }
