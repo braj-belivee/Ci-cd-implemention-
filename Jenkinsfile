@@ -50,7 +50,7 @@ pipeline {
 
     post {
         always {
-            sh 'docker-compose down -f Docker-compose.yaml || true'
+            sh 'docker-compose -f Docker-compose.yaml down || true'
         }
     }
 }
