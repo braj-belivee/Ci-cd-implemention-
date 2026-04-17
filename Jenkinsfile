@@ -38,10 +38,11 @@ pipeline {
         stage('Deploy to EC2') {
             steps {
                 echo 'deploy to EC2'
-                def dockercmd = 'docker-compose -f Docker-compose.yaml up -d'
-                sshagent(['ec2-user']) {
-                 sh "ssh -o StrictHostKeyChecking=no ubuntu@3.85.134.113 ${dockercmd}"
-
+                 script{
+                    def dockercmd = 'docker-compose -f Docker-compose.yaml up -d'
+                    sshagent(['ec2-user']) {
+                    sh "ssh -o StrictHostKeyChecking=no ubuntu@3.85.134.113 ${dockercmd}"
+                }
                 }
             }
         }
