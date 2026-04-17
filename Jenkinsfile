@@ -35,9 +35,14 @@ pipeline {
             }
         }
 
-        stage('Deploy') {
+        stage('Deploy to EC2') {
             steps {
-                sh 'docker-compose -f Docker-compose.yaml up -d'
+                echo 'deploy to EC2'
+                def dockercmd = 'docker-compose -f Docker-compose.yaml up -d'
+                sshagent(['ec2-user']) {
+                 sh "ssh -o StrictHostKeyChecking=no ubuntu@3.85.134.113 ${dockercmd}"
+
+                }
             }
         }
 
@@ -45,12 +50,6 @@ pipeline {
             steps {
                 sh 'sleep 15'
             }
-        }
-    }
-
-    post {
-        always {
-            sh 'docker-compose -f Docker-compose.yaml down || true'
         }
     }
 }
